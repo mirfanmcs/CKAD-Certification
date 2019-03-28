@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-service-config
+data:
+  COMPANY_NAME: ABC Pty Ltd
+  COMPANY_ADDRESS: George Street, Sydney

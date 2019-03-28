@@ -1,0 +1,17 @@
+#will not create container because 1000G is not available on node. Will leave the Pod state in pending. 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memory-demo
+  namespace: mem-example
+spec:
+  containers:
+  - name: memory-demo-ctr
+    image: polinux/stress
+    resources:
+      limits:
+        memory: "1000Gi"
+      requests:
+        memory: "1000Gi"
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]

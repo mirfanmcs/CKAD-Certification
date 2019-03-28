@@ -1,0 +1,23 @@
+#For a Pod to be given a QoS class of Guaranteed:
+#  Every Container in the Pod must have a memory limit and a memory request, and they must be the same.
+#  Every Container in the Pod must have a CPU limit and a CPU request, and they must be the same.
+#If a Container specifies its own memory limit, but does not specify a memory request, Kubernetes automatically assigns a memory request that matches the limit. Similarly, if a Container specifies its own CPU limit, but does not specify a CPU request, Kubernetes automatically assigns a CPU request that matches the limit.
+
+#Pods are considered top-priority and are guaranteed to not be killed until they exceed their limits.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-demo
+  namespace: qos-example
+spec:
+  containers:
+  - name: qos-demo-ctr
+    image: nginx
+    resources:
+      limits:
+        memory: "200Mi"
+        cpu: "700m"
+      requests:
+        memory: "200Mi"
+        cpu: "700m"

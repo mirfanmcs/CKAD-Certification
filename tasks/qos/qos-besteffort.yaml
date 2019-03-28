@@ -1,0 +1,13 @@
+#For a Pod to be given a QoS class of BestEffort, the Containers in the Pod must not have any memory or CPU limits or requests
+#Pods will be treated as lowest priority. Processes in these pods are the first to get killed if the system runs out of memory
+#These containers can use any amount of free memory in the node though.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-demo-3
+  namespace: qos-example
+spec:
+  containers:
+  - name: qos-demo-3-ctr
+    image: nginx

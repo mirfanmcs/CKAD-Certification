@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productserviceapp
+  labels:
+    app: productserviceapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: productserviceapp
+  template:
+    metadata:
+      labels:
+        app: productserviceapp
+    spec:
+      containers:
+      - name: productserviceapp
+        image: mirfanmcs/productservice
+#        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 15
+        env:
+        - name: APPLICATION_NAME
+          value: Product Service
+        - name: COMPANY_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: product-service-config
+              key: COMPANY_NAME
+        - name: COMPANY_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: product-service-config
+              key: COMPANY_ADDRESS
+        - name: APPLICATION_SECRET_1
+          valueFrom:
+            secretKeyRef:
+              name: product-service-secret
+              key: APPLICATION_SECRET_1
+        - name: APPLICATION_SECRET_2
+          valueFrom:
+            secretKeyRef:
+              name: product-service-secret
+              key: APPLICATION_SECRET_2

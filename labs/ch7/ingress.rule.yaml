@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-test
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: secondapp.com
+    http: 
+      paths:
+      - backend:
+          serviceName: secondapp
+          servicePort: 80
+        path: /
+
+#Another way to set the rule. Using the same host and invoe service based on path
+#rules:
+#  - host: my.kubernetes.example
+#    http:
+#     paths:
+#      - path: /webapp1
+#        backend:
+#          serviceName: webapp1-svc
+#          servicePort: 80
+#      - path: /webapp2
+#        backend:
+#          serviceName: webapp2-svc
+#          servicePort: 80
+#      - backend:  #default to webapp3-svc
+#          serviceName: webapp3-svc
+#          servicePort: 80
+
+#Syntax of calling will be:
+#  $ curl -H "Host: my.kubernetes.example" http://172.17.0.49/webapp1

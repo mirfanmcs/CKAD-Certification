@@ -1,0 +1,16 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nfs-0001
+  #annotations:
+  #  pv.beta.kubernetes.io/gid: "1234"
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  nfs:
+    server: 192.168.99.100  #192.168.99.100 is minikube ip which can be found running 'minikube ip' command or 'kubectl cluster-info' command   #Run this command to get host IP. Take address of second line -> ifconfig | grep "inet " | grep -v 127.0.0.1
+    path: /exports/data-0001

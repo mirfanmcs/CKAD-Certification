@@ -1,0 +1,22 @@
+#A Pod is given a QoS class of Burstable if:
+# The Pod does not meet the criteria for QoS class Guaranteed.
+# At least one Container in the Pod has a memory or CPU request.
+# Request and Limit are not same
+
+#Pods have some form of minimal resource guarantee, but can use more resources when available. 
+#Under system memory pressure, these containers are more likely to be killed once they exceed their requests and no Best-Effort pods exist.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-demo-2
+  namespace: qos-example
+spec:
+  containers:
+  - name: qos-demo-2-ctr
+    image: nginx
+    resources:
+      limits:
+        memory: "200Mi"
+      requests:
+        memory: "100Mi"

@@ -1,0 +1,22 @@
+#Security context for POD
+#In the configuration file, the runAsUser field specifies that for any Containers in the Pod, the first process runs with user ID 1000. The fsGroup field specifies that group ID 2000 is associated with all Containers in the Pod. Group ID 2000 is also associated with the volume mounted at /data/demo and with any files created in that volume.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-demo
+spec:
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 2000
+  volumes:
+  - name: sec-ctx-vol
+    emptyDir: {}
+  containers:
+  - name: sec-ctx-demo
+    image: gcr.io/google-samples/node-hello:1.0
+    volumeMounts:
+    - name: sec-ctx-vol
+      mountPath: /data/demo
+    securityContext:
+      allowPrivilegeEscalation: false

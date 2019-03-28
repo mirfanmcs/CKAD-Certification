@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: question-two-pod
+  namespace: ggckad-s2 
+spec:
+   containers:
+    - name: nginx
+      image: nginx
+      env:
+        - name: CONNECTION_STRING
+          valueFrom:
+            configMapKeyRef:
+              name: myconfigmap
+              key: connection_string
+        - name: EXTERNAL_URL
+          valueFrom:
+            configMapKeyRef:
+              name: myconfigmap
+              key: external_url
+
